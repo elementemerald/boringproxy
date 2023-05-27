@@ -10,7 +10,7 @@ ARG ORIGIN='local'
 
 WORKDIR /build
 
-RUN update-ca-certificates && apk add git
+RUN apk add --no-cache git ca-certificates && update-ca-certificates
 
 RUN if [[ "ORIGIN" == 'remote' ]] ; then git clone --depth 1 --branch "${BRANCH}" ${REPO}; fi
 
