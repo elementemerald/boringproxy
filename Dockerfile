@@ -10,7 +10,7 @@ ARG ORIGIN='local'
 
 WORKDIR /build
 
-RUN apk update && apk add --no-cache git ca-certificates openssl && update-ca-certificates
+RUN apk add git
 
 RUN if [[ "ORIGIN" == 'remote' ]] ; then git clone --depth 1 --branch "${BRANCH}" ${REPO}; fi
 
@@ -22,7 +22,8 @@ RUN cd cmd/boringproxy && CGO_ENABLED=0 GOOS=${GOOS} GOARCH=${GOARCH} \
 	go build -ldflags "-X main.Version=${VERSION}" \
 	-o boringproxy
 
-FROM scratch
+FROM alpine
+RUN apk add ca-certificates
 EXPOSE 80 443
 WORKDIR /storage
 
