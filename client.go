@@ -10,6 +10,7 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"strings"
 	"sync"
 	"time"
 
@@ -202,7 +203,8 @@ func (c *Client) PollTunnels(ctx context.Context) error {
 		return errors.New("Failed to listen (not 200 status)")
 	}
 
-	etag := resp.Header["Etag"][0]
+	etagName := strings.ToLower("Etag")
+	etag := resp.Header[etagName][0]
 
 	if etag != c.previousEtag {
 
