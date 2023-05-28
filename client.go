@@ -203,8 +203,7 @@ func (c *Client) PollTunnels(ctx context.Context) error {
 		return errors.New("Failed to listen (not 200 status)")
 	}
 
-	etagName := strings.ToLower("Etag")
-	etag := resp.Header[etagName][0]
+	etag := resp.Header["etag"][0]
 
 	if etag != c.previousEtag {
 
